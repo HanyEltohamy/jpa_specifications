@@ -2,6 +2,7 @@ package com.bits.jpaSpecification.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class PhoneController {
     private final PhoneService phoneService;
 
     @GetMapping
-    public ResponseEntity<List<Phone>> getPhones(PhoneFilterCriteria filter) {
-        return ResponseEntity.ok(phoneService.findAllPhones(filter));
+    public ResponseEntity<List<Phone>> getPhones(PhoneFilterCriteria filter, Pageable pageable) {
+        return ResponseEntity.ok(phoneService.filterPhones(filter,pageable));
     }
 }

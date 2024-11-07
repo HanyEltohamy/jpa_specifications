@@ -2,6 +2,8 @@ package com.bits.jpaSpecification.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,9 @@ public class PhoneService {
 
     private final PhoneRepository phoneRepository;
 
-    public List<Phone> findAllPhones(PhoneFilterCriteria PhoneFilterCriteria) {
-        Specification<Phone> specification = PhoneSpecification.filterPhone(PhoneFilterCriteria);
-        return phoneRepository.findAll(specification);
+    public List<Phone> filterPhones(PhoneFilterCriteria filter, Pageable pageable) {
+        Specification<Phone> spec = PhoneSpecification.filterPhone(filter);
+        Page<Phone> page = phoneRepository.findAll(spec, pageable);
+        return page.getContent();
     }
 }
